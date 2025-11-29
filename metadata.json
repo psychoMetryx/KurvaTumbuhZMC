@@ -1,0 +1,5 @@
+{
+  "name": "GrowthCompass",
+  "description": "Kalkulator pertumbuhan anak profesional menggunakan standar data CDC/WHO untuk menghitung persentil dan Z-score.",
+  "requestFramePermissions": []
+}
