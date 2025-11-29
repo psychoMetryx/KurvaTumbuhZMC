@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { Activity } from 'lucide-react';
 import PatientForm from './components/PatientForm';
 import ResultsCard from './components/ResultsCard';
+import EducationPanel from './components/EducationPanel';
 import { PatientData, GrowthStats } from './types';
 import { calculateFullStats, calculateAgeInMonths } from './utils/growthMath';
-import { Activity } from 'lucide-react';
 
 const INITIAL_PATIENT: PatientData = {
   dob: '2023-01-01',
@@ -16,6 +17,7 @@ const INITIAL_PATIENT: PatientData = {
 export default function App() {
   const [patient, setPatient] = useState<PatientData>(INITIAL_PATIENT);
   const [stats, setStats] = useState<GrowthStats | null>(null);
+  const [activeTab, setActiveTab] = useState<'education' | 'journal'>('education');
 
   const handleCalculate = () => {
     const age = calculateAgeInMonths(patient.dob, patient.measurementDate);
@@ -30,7 +32,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="bg-teal-600 p-2 rounded-lg">
-                <Activity className="w-5 h-5 text-white" />
+              <Activity className="w-5 h-5 text-white" />
             </div>
             <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-700 to-teal-500">
               GrowthCompass
@@ -44,27 +46,60 @@ export default function App() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
-          {/* Left Column: Input */}
-          <div className="lg:col-span-4">
-            <div className="sticky top-24 space-y-6">
+        <div className="flex gap-3 mb-6" role="tablist" aria-label="Tampilan informasi">
+          <button
+            type="button"
+            onClick={() => setActiveTab('education')}
+            className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${
+              activeTab === 'education'
+                ? 'bg-teal-600 text-white border-teal-600'
+                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
+            }`}
+            role="tab"
+            aria-selected={activeTab === 'education'}
+          >
+            Edukasi
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('journal')}
+            className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${
+              activeTab === 'journal'
+                ? 'bg-teal-600 text-white border-teal-600'
+                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
+            }`}
+            role="tab"
+            aria-selected={activeTab === 'journal'}
+          >
+            Jurnal Nyeri
+          </button>
+        </div>
+
+        {activeTab === 'education' ? (
+          <EducationPanel />
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8" role="tabpanel" aria-label="Jurnal Nyeri">
+
+            {/* Left Column: Input */}
+            <div className="lg:col-span-4">
+              <div className="sticky top-24 space-y-6">
                 <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 text-sm text-blue-800">
-                    <strong>Catatan:</strong> Alat ini menggunakan Standar WHO untuk usia 0-24 bulan dan Grafik CDC untuk usia 2-20 tahun.
+                  <strong>Catatan:</strong> Alat ini menggunakan Standar WHO untuk usia 0-24 bulan dan Grafik CDC untuk usia 2-20 tahun.
                 </div>
-                <PatientForm 
-                    data={patient} 
-                    onChange={setPatient} 
-                    onCalculate={handleCalculate}
+                <PatientForm
+                  data={patient}
+                  onChange={setPatient}
+                  onCalculate={handleCalculate}
                 />
+              </div>
+            </div>
+
+            {/* Right Column: Results */}
+            <div className="lg:col-span-8">
+              <ResultsCard stats={stats} patient={patient} />
             </div>
           </div>
-
-          {/* Right Column: Results */}
-          <div className="lg:col-span-8">
-            <ResultsCard stats={stats} patient={patient} />
-          </div>
-        </div>
+        )}
       </main>
     </div>
   );
