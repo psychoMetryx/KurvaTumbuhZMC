@@ -72,7 +72,25 @@ export default function App() {
           <div className="lg:col-span-4">
             <div className="sticky top-24 space-y-6">
               <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 text-sm text-blue-800">
-                <strong>Catatan:</strong> Alat ini menggunakan Standar WHO untuk usia 0-24 bulan dan Grafik CDC untuk usia 2-20 tahun.
+                <strong>Catatan:</strong> Alat ini otomatis memakai{' '}
+                <a
+                  href="https://www.who.int/tools/child-growth-standards"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline font-medium text-blue-900"
+                >
+                  WHO Child Growth Standards (2006)
+                </a>{' '}
+                untuk usia 0–24 bulan dan beralih ke{' '}
+                <a
+                  href="https://www.cdc.gov/growthcharts"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline font-medium text-blue-900"
+                >
+                  CDC Growth Charts (2000)
+                </a>{' '}
+                untuk usia 2–20 tahun.
               </div>
               <PatientForm
                 data={patient}
@@ -94,7 +112,7 @@ export default function App() {
           <div className="font-semibold text-slate-700">Sumber Standar Pertumbuhan</div>
           <p>
             <span className="font-medium text-slate-800">WHO Child Growth Standards (2006)</span>{' '}
-            digunakan otomatis untuk anak usia 0–24 bulan. Sumber: {' '}
+            (publikasi resmi WHO) digunakan otomatis untuk anak usia 0–24 bulan. Sumber: {' '}
             <a
               href="https://www.who.int/tools/child-growth-standards"
               target="_blank"
@@ -107,7 +125,7 @@ export default function App() {
           </p>
           <p>
             <span className="font-medium text-slate-800">CDC Growth Charts (2000)</span>{' '}
-            diterapkan otomatis untuk anak usia 2–20 tahun. Sumber: {' '}
+            (rilis resmi CDC tahun 2000) diterapkan otomatis untuk anak usia 2–20 tahun. Sumber: {' '}
             <a
               href="https://www.cdc.gov/growthcharts"
               target="_blank"
@@ -118,7 +136,7 @@ export default function App() {
             </a>
             .
           </p>
-          <p className="text-slate-500">Aplikasi akan memilih standar yang sesuai berdasarkan usia anak.</p>
+          <p className="text-slate-500">Standar aktif mengikuti usia: WHO (0–24 bulan) dan CDC (2–20 tahun).</p>
         </div>
       </footer>
     </div>
