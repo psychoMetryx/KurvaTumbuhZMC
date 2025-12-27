@@ -31,6 +31,8 @@ const PatientForm: React.FC<Props> = ({ data, onChange, onCalculate }) => {
     handleChange('height', unit === 'metric' ? num : num * 2.54);
   };
 
+  const isCalculateDisabled = !data.dob;
+
   return (
     <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
       <div className="flex justify-between items-center mb-6">
@@ -77,10 +79,13 @@ const PatientForm: React.FC<Props> = ({ data, onChange, onCalculate }) => {
             <Calendar className="absolute left-3 top-2.5 w-5 h-5 text-slate-400" />
             <input
               type="date"
-              value={data.dob}
+              value={data.dob || ''}
               onChange={(e) => handleChange('dob', e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
             />
+            {!data.dob && (
+              <p className="mt-1 text-xs text-slate-500">Masukkan tanggal lahir untuk menghitung usia.</p>
+            )}
           </div>
         </div>
         <div>
@@ -89,7 +94,7 @@ const PatientForm: React.FC<Props> = ({ data, onChange, onCalculate }) => {
             <Calendar className="absolute left-3 top-2.5 w-5 h-5 text-slate-400" />
             <input
               type="date"
-              value={data.measurementDate}
+              value={data.measurementDate || ''}
               onChange={(e) => handleChange('measurementDate', e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
             />
@@ -127,7 +132,12 @@ const PatientForm: React.FC<Props> = ({ data, onChange, onCalculate }) => {
 
       <button
         onClick={onCalculate}
-        className="w-full mt-8 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+        disabled={isCalculateDisabled}
+        className={`w-full mt-8 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 ${
+          isCalculateDisabled
+            ? 'bg-slate-300 cursor-not-allowed'
+            : 'bg-teal-600 hover:bg-teal-700'
+        }`}
       >
         <Calculator className="w-5 h-5" />
         Hitung Persentil
