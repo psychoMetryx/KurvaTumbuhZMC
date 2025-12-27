@@ -6,19 +6,28 @@ import { PatientData, GrowthStats } from './types';
 import { calculateFullStats, calculateAgeInMonths } from './utils/growthMath';
 
 const INITIAL_PATIENT: PatientData = {
-  dob: '2023-01-01',
-  measurementDate: new Date().toISOString().split('T')[0],
+  dob: '',
+  measurementDate: '',
   sex: 'male',
   weight: 12,
   height: 85,
 };
 
 export default function App() {
-  const [patient, setPatient] = useState<PatientData>(INITIAL_PATIENT);
+  const [patient, setPatient] = useState<PatientData>(() => ({
+    ...INITIAL_PATIENT,
+    measurementDate: new Date().toISOString().split('T')[0],
+  }));
   const [stats, setStats] = useState<GrowthStats | null>(null);
 
   const handleCalculate = () => {
-    const age = calculateAgeInMonths(patient.dob, patient.measurementDate);
+    if (!patient.dob) {
+      setStats(null);
+      return;
+    }
+
+    const measurementDate = patient.measurementDate || new Date().toISOString().split('T')[0];
+    const age = calculateAgeInMonths(patient.dob, measurementDate);
     const results = calculateFullStats(patient.sex, age, patient.weight, patient.height);
     setStats(results);
   };
