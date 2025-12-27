@@ -22,8 +22,8 @@ export const getMetricInterpretation = (
     return {
       category: isHigh ? 'Sangat tinggi' : 'Sangat rendah',
       description: isHigh
-        ? 'Nilai lebih dari 3 SD di atas median; evaluasi risiko kelebihan pertumbuhan dan konteks klinis.'
-        : 'Nilai lebih dari 3 SD di bawah median; pertimbangkan evaluasi gizi dan medis lebih lanjut.',
+        ? 'Nilai sangat jauh di atas median (≈2 SD atau lebih); evaluasi risiko kelebihan pertumbuhan dan konteks klinis.'
+        : 'Nilai sangat jauh di bawah median (≈2 SD atau lebih); pertimbangkan evaluasi gizi dan medis lebih lanjut.',
       badgeClass: badgeClassMap.red,
     };
   }
