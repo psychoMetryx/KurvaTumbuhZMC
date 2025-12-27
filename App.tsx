@@ -82,6 +82,39 @@ export default function App() {
           </div>
         </div>
       </main>
+
+      <footer className="border-t border-slate-200 bg-white mt-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-sm text-slate-600 space-y-2">
+          <div className="font-semibold text-slate-700">Sumber Standar Pertumbuhan</div>
+          <p>
+            <span className="font-medium text-slate-800">WHO Child Growth Standards (2006)</span>{' '}
+            digunakan otomatis untuk anak usia 0–24 bulan. Sumber: {' '}
+            <a
+              href="https://www.who.int/tools/child-growth-standards"
+              target="_blank"
+              rel="noreferrer"
+              className="text-teal-700 hover:text-teal-800 font-medium"
+            >
+              WHO Anthro Data &amp; Publication
+            </a>
+            .
+          </p>
+          <p>
+            <span className="font-medium text-slate-800">CDC Growth Charts (2000)</span>{' '}
+            diterapkan otomatis untuk anak usia 2–20 tahun. Sumber: {' '}
+            <a
+              href="https://www.cdc.gov/growthcharts"
+              target="_blank"
+              rel="noreferrer"
+              className="text-teal-700 hover:text-teal-800 font-medium"
+            >
+              CDC Growth Charts Resources
+            </a>
+            .
+          </p>
+          <p className="text-slate-500">Aplikasi akan memilih standar yang sesuai berdasarkan usia anak.</p>
+        </div>
+      </footer>
     </div>
   );
 }
