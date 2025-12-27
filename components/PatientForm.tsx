@@ -83,9 +83,7 @@ const PatientForm: React.FC<Props> = ({ data, onChange, onCalculate }) => {
               onChange={(e) => handleChange('dob', e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
             />
-            {!data.dob && (
-              <p className="mt-1 text-xs text-slate-500">Masukkan tanggal lahir untuk menghitung usia.</p>
-            )}
+            <p className="mt-1 text-xs text-slate-500">Isi tanggal lahir pasien untuk menghitung usia secara otomatis.</p>
           </div>
         </div>
         <div>
@@ -98,31 +96,38 @@ const PatientForm: React.FC<Props> = ({ data, onChange, onCalculate }) => {
               onChange={(e) => handleChange('measurementDate', e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
             />
+            <p className="mt-1 text-xs text-slate-500">Pilih tanggal saat tinggi dan berat diukur.</p>
           </div>
         </div>
 
         {/* Measurements */}
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">Berat Badan ({unit === 'metric' ? 'kg' : 'lbs'})</label>
+          <label className="block text-sm font-medium text-slate-700 mb-1">
+            Berat Badan ({unit === 'metric' ? 'kg (kilogram)' : 'lbs (pound)'})
+          </label>
           <div className="relative">
             <Scale className="absolute left-3 top-2.5 w-5 h-5 text-slate-400" />
             <input
               type="number"
               step="0.1"
               value={displayWeight}
+              placeholder="cth: 12.4 kg / 27.3 lbs"
               onChange={(e) => handleWeightChange(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
             />
           </div>
         </div>
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">Tinggi Badan ({unit === 'metric' ? 'cm' : 'in'})</label>
+          <label className="block text-sm font-medium text-slate-700 mb-1">
+            Tinggi Badan ({unit === 'metric' ? 'cm (sentimeter)' : 'in (inci)'})
+          </label>
           <div className="relative">
             <Ruler className="absolute left-3 top-2.5 w-5 h-5 text-slate-400" />
             <input
               type="number"
               step="0.1"
               value={displayHeight}
+              placeholder="cth: 85 cm / 33.5 in"
               onChange={(e) => handleHeightChange(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
             />
