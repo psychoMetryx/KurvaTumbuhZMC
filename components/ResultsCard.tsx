@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Suspense, useMemo } from 'react';
 import { Activity } from 'lucide-react';
 import { getMetricInterpretation } from '../utils/interpretation';
 import { GrowthStats, PatientData } from '../types';
-import PercentileChart from './PercentileChart';
+
+const PercentileChart = React.lazy(() => import('./PercentileChart'));
 
 interface Props {
   stats: GrowthStats | null;
@@ -39,6 +40,27 @@ const ResultsCard: React.FC<Props> = ({ stats, patient }) => {
     );
   };
 
+  const chartConfigs = useMemo(
+    () => [
+      {
+        title: 'Grafik Berat terhadap Usia',
+        metric: 'weight' as const,
+        patientValue: patient.weight,
+      },
+      {
+        title: 'Grafik Tinggi terhadap Usia',
+        metric: 'height' as const,
+        patientValue: patient.height,
+      },
+      {
+        title: 'Grafik IMT (BMI) terhadap Usia',
+        metric: 'bmi' as const,
+        patientValue: stats.bmi,
+      },
+    ],
+    [patient.height, patient.weight, stats.bmi],
+  );
+
   return (
     <div className="space-y-6">
       {/* Stats Summary */}
@@ -57,33 +79,25 @@ const ResultsCard: React.FC<Props> = ({ stats, patient }) => {
 
       {/* Charts - Single Column Stacked */}
       <div className="flex flex-col gap-8">
-        <div className="bg-white p-3 rounded-xl shadow-sm border border-slate-200">
-            <h4 className="font-semibold text-slate-700 mb-2 px-2 pt-2">Grafik Berat terhadap Usia</h4>
-            <PercentileChart 
-                sex={patient.sex} 
-                ageInMonths={stats.ageInMonths} 
-                metric="weight" 
-                patientValue={patient.weight} 
-            />
-        </div>
-        <div className="bg-white p-3 rounded-xl shadow-sm border border-slate-200">
-            <h4 className="font-semibold text-slate-700 mb-2 px-2 pt-2">Grafik Tinggi terhadap Usia</h4>
-            <PercentileChart 
-                sex={patient.sex} 
-                ageInMonths={stats.ageInMonths} 
-                metric="height" 
-                patientValue={patient.height} 
-            />
-        </div>
-         <div className="bg-white p-3 rounded-xl shadow-sm border border-slate-200">
-            <h4 className="font-semibold text-slate-700 mb-2 px-2 pt-2">Grafik IMT (BMI) terhadap Usia</h4>
-            <PercentileChart 
-                sex={patient.sex} 
-                ageInMonths={stats.ageInMonths} 
-                metric="bmi" 
-                patientValue={stats.bmi} 
-            />
-        </div>
+        <Suspense
+          fallback={(
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 text-slate-500 text-sm">
+              Memuat grafik pertumbuhan...
+            </div>
+          )}
+        >
+          {chartConfigs.map((chart) => (
+            <div key={chart.metric} className="bg-white p-3 rounded-xl shadow-sm border border-slate-200">
+              <h4 className="font-semibold text-slate-700 mb-2 px-2 pt-2">{chart.title}</h4>
+              <PercentileChart
+                sex={patient.sex}
+                ageInMonths={stats.ageInMonths}
+                metric={chart.metric}
+                patientValue={chart.patientValue}
+              />
+            </div>
+          ))}
+        </Suspense>
       </div>
     </div>
   );
