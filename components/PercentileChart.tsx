@@ -47,11 +47,11 @@ const PercentileChart: React.FC<Props> = ({ sex, ageInMonths, metric, patientVal
   const unit = metric === 'bmi' ? '' : (metric === 'height' ? 'cm' : 'kg');
 
   const zScoreMap: Record<string, string> = {
-    "P 3%": "-1.88",
-    "P 15%": "-1.04",
-    "P 50%": "0",
-    "P 85%": "+1.04",
-    "P 97%": "+1.88",
+    "Persentil ke-3": "-1.88",
+    "Persentil ke-15": "-1.04",
+    "Persentil ke-50": "0",
+    "Persentil ke-85": "+1.04",
+    "Persentil ke-97": "+1.88",
   };
 
   return (
@@ -99,11 +99,11 @@ const PercentileChart: React.FC<Props> = ({ sex, ageInMonths, metric, patientVal
           
           {/* Growth Curves - Reordered to Descending (Top to Bottom visual order) 
               This ensures the Tooltip lists P97 first (top) down to P3 (bottom) */}
-          <Line type="monotone" dataKey="p97" stroke="#cbd5e1" strokeWidth={1} dot={false} name="P 97%" />
-          <Line type="monotone" dataKey="p85" stroke="#94a3b8" strokeWidth={1} dot={false} name="P 85%" />
-          <Line type="monotone" dataKey="p50" stroke="#0d9488" strokeWidth={2} dot={false} name="P 50%" />
-          <Line type="monotone" dataKey="p15" stroke="#94a3b8" strokeWidth={1} dot={false} name="P 15%" />
-          <Line type="monotone" dataKey="p3" stroke="#cbd5e1" strokeWidth={1} dot={false} name="P 3%" />
+          <Line type="monotone" dataKey="p97" stroke="#0f172a" strokeWidth={2} dot={false} name="Persentil ke-97" />
+          <Line type="monotone" dataKey="p85" stroke="#2563eb" strokeWidth={2} dot={false} name="Persentil ke-85" />
+          <Line type="monotone" dataKey="p50" stroke="#16a34a" strokeWidth={3} dot={false} name="Persentil ke-50" />
+          <Line type="monotone" dataKey="p15" stroke="#f59e0b" strokeWidth={2} dot={false} name="Persentil ke-15" />
+          <Line type="monotone" dataKey="p3" stroke="#9333ea" strokeWidth={2} dot={false} name="Persentil ke-3" />
 
           {/* Patient Dot */}
           <ReferenceDot x={ageInMonths} y={patientValue} r={6} fill="#dc2626" stroke="white" strokeWidth={2} />
