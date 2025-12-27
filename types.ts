@@ -5,6 +5,8 @@ export type UnitSystem = 'metric' | 'imperial';
 export interface PatientData {
   dob: string;
   measurementDate: string;
+  ageInMonths?: number;
+  ageInputMode?: 'dates' | 'age';
   sex: Sex;
   weight: number; // always stored in kg
   height: number; // always stored in cm

@@ -8,6 +8,7 @@ import { calculateFullStats, calculateAgeInMonths } from './utils/growthMath';
 const INITIAL_PATIENT: PatientData = {
   dob: '',
   measurementDate: '',
+  ageInputMode: 'dates',
   sex: 'male',
   weight: 12,
   height: 85,
@@ -21,13 +22,18 @@ export default function App() {
   const [stats, setStats] = useState<GrowthStats | null>(null);
 
   const handleCalculate = () => {
-    if (!patient.dob) {
+    const measurementDate = patient.measurementDate || new Date().toISOString().split('T')[0];
+    const age = patient.ageInputMode === 'age'
+      ? patient.ageInMonths
+      : patient.dob
+        ? calculateAgeInMonths(patient.dob, measurementDate)
+        : null;
+
+    if (age === null || age === undefined) {
       setStats(null);
       return;
     }
 
-    const measurementDate = patient.measurementDate || new Date().toISOString().split('T')[0];
-    const age = calculateAgeInMonths(patient.dob, measurementDate);
     const results = calculateFullStats(patient.sex, age, patient.weight, patient.height);
     setStats(results);
   };
